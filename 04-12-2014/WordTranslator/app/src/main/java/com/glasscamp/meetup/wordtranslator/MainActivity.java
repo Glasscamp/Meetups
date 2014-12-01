@@ -57,7 +57,7 @@ public class MainActivity extends Activity {
         });
 
 
-        mView = buildView("Translation in progress...");
+        mView = buildView(getString(R.string.translation_in_progress));
         Slider.from(mView).startIndeterminate();
         setContentView(mView);
 
