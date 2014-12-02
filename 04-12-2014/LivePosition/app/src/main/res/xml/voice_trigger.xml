@@ -1,0 +1,5 @@
+<!-- For more information about voice trigger, check out: https://developers.google.com/glass/develop/gdk/starting-glassware -->
+<trigger command="@string/app_name" >
+    <constraints
+        network="true" />
+</trigger>
