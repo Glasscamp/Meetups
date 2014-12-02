@@ -5,9 +5,10 @@
     <string name="title_activity_main">Translator</string>
     <string name="translation_in_progress">Translation in progress</string>
     <string name="translating">translating</string>
-    <string name="prompt">Speak the text to translate into</string>
-    <string name="prompt_lang">Which language do you want? Example : \"German\"</string>
+    <string name="prompt">Speak the text to translate in</string>
+    <string name="prompt_lang">Which language? Example : \"German\"</string>
     <string name="into">into</string>
+    <string name="start">Say \"Ok Glass\" to start</string>
 
     <string name="french">french</string>
     <string name="italian">italian</string>

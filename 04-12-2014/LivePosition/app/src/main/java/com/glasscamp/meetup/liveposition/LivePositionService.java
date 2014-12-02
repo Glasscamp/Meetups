@@ -12,6 +12,7 @@ import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.AsyncTask;
+import android.os.Debug;
 import android.os.Handler;
 import android.os.IBinder;
 import android.widget.RemoteViews;
@@ -23,7 +24,7 @@ import java.util.List;
 
 public class LivePositionService extends Service {
 
-    private static final long DELAY_MILLIS = 30000;
+    private static final long DELAY_MILLIS = 15000;
     private static final String LIVE_CARD_TAG = "LivePositionService";
     private boolean isStopped = false;
 
@@ -60,14 +61,15 @@ public class LivePositionService extends Service {
                         if(isStopped) return;
 
                         if(image != null && mRemoteViews != null) {
-                            mRemoteViews.setImageViewBitmap(R.id.map,image);
+                            mRemoteViews.setImageViewBitmap(R.id.map_view,image);
+                            mLiveCard.setViews(mRemoteViews);
                         }
 
                         mHandler.postDelayed(updateCardRunnable, DELAY_MILLIS);
                     }
                 }.execute("http://maps.googleapis.com/maps/api/staticmap?center="
                         +mLat+","+mLng+
-                        "&zoom=14&size=640X340&maptype=roadmap&markers=color:red%7Clabel:MyPosition%7C"
+                        "&zoom=16&size=640x340&maptype=roadmap&markers=color:red%7Clabel:MyPosition%7C"
                         +mLat+","+mLng+
                         "&sensor=false");
             }
@@ -96,7 +98,7 @@ public class LivePositionService extends Service {
             mLiveCard.navigate();
         }
 
-        mHandler.postDelayed(updateCardRunnable, DELAY_MILLIS);
+        mHandler.post(updateCardRunnable);
 
         return START_STICKY;
     }

@@ -1,16 +1,7 @@
 package com.glasscamp.meetup.wordtranslator;
 
-import com.google.android.glass.media.Sounds;
-import com.google.android.glass.view.WindowUtils;
-import com.google.android.glass.widget.CardBuilder;
-import com.google.android.glass.widget.CardScrollAdapter;
-import com.google.android.glass.widget.CardScrollView;
-import com.google.android.glass.widget.Slider;
-
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.media.AudioManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -19,8 +10,10 @@ import android.speech.tts.TextToSpeech;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
+
+import com.google.android.glass.view.WindowUtils;
+import com.google.android.glass.widget.CardBuilder;
+import com.google.android.glass.widget.Slider;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,16 +29,17 @@ import java.util.List;
 public class MainActivity extends Activity {
 
 
-    private String mLanguage;
     private final int SPEECH_REQUEST = 1000;
     private final int LANGUAGE_REQUEST = 2000;
+    private String mLanguage;
     private View mView;
+    private Slider.Indeterminate mSlider;
     private TextToSpeech mSpeech;
 
     @Override
     protected void onCreate(Bundle bundle) {
-
-
+        super.onCreate(bundle);
+        getWindow().requestFeature(WindowUtils.FEATURE_VOICE_COMMANDS);
         // Even though the text-to-speech engine is only used in response to a menu action, we
         // initialize it when the application starts so that we avoid delays that could occur
         // if we waited until it was needed to start it up.
@@ -57,12 +51,15 @@ public class MainActivity extends Activity {
         });
 
 
-        mView = buildView(getString(R.string.translation_in_progress));
-        Slider.from(mView).startIndeterminate();
+        mView = buildView(getString(R.string.start));
         setContentView(mView);
 
-        super.onCreate(bundle);
-        getWindow().requestFeature(WindowUtils.FEATURE_VOICE_COMMANDS);
+
+    }
+
+    @Override
+    public void onAttachedToWindow() {
+        super.onAttachedToWindow();
         getWindow().openPanel(WindowUtils.FEATURE_VOICE_COMMANDS, null);
     }
 
@@ -125,6 +122,10 @@ public class MainActivity extends Activity {
             return;
         }
 
+        mView = buildView(getString(R.string.translation_in_progress));
+        mSlider = Slider.from(mView).startIndeterminate();
+        setContentView(mView);
+
         AsyncTask<String, String, String> downloadTranslation = new AsyncTask<String, String, String>() {
 
             @Override
@@ -170,6 +171,7 @@ public class MainActivity extends Activity {
             protected void onPostExecute(String s) {
                 mView = buildView(s);
                 setContentView(mView);
+                mSlider.hide();
             }
         };
 

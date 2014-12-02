@@ -3,7 +3,7 @@
 
     <string name="app_name">BluetoothDetector</string>
     <string name="title_activity_main">BluetoothDetector</string>
-    <string name="scan_now">Scan now</string>
+    <string name="scan_now">scan now</string>
     <string name="searching">Searching nearby devices</string>
     <string name="no_nearby_devices">No devices found</string>
 
