@@ -148,6 +148,8 @@ public class MainActivity extends Activity {
 
         mBluetoothAdapter.startLeScan(mLeScanCallback);
 
+        //fakeBeacon();
+
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -161,6 +163,22 @@ public class MainActivity extends Activity {
             }
         }, SCAN_PERIOD);
 
+    }
+
+    private void fakeBeacon() {
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                if(!isAnyDeviceNearby) {
+                    isAnyDeviceNearby = true;
+                    mDevicesViews.remove(0);
+                }
+                mDevicesViews.add(buildView("Estimote Beacon 1"));
+                mCardScroller.getAdapter().notifyDataSetChanged();
+
+            }
+        }, SCAN_PERIOD/4);
     }
 
 }
