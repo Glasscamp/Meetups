@@ -1,6 +1,7 @@
 package com.wearablelab.wearapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.wearable.view.DelayedConfirmationView;
 import android.view.View;
@@ -16,14 +17,12 @@ public class DelayedConfirmationActivity extends Activity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.delayed_confirmation);
-        Bundle bundle = getIntent().getExtras();
-        if(bundle != null) {
-            if(bundle.containsKey("spokenText")) {
-                String spokenText = bundle.getString("spokenText");
-                if(spokenText != null && spokenText.length() > 0) {
-                    TextView title = (TextView) findViewById(R.id.spokenText);
-                    title.setText(spokenText);
-                }
+
+        if (getIntent().hasExtra(Intent.EXTRA_TEXT)) {
+            String spokenText = getIntent().getStringExtra(Intent.EXTRA_TEXT);
+            if (spokenText != null && spokenText.length() > 0) {
+                TextView title = (TextView) findViewById(R.id.spokenText);
+                title.setText(spokenText);
             }
         }
 

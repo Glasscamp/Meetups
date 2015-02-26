@@ -3,6 +3,7 @@
     package="com.wearablelab.wearapp" >
 
     <uses-feature android:name="android.hardware.type.watch" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <application
         android:allowBackup="true"
@@ -18,6 +19,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
+        </activity>
+        <activity
+            android:name=".DelayedConfirmationActivity"
+            android:label="@string/title_activity_delayed_confirmation" >
+
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
                 <category android:name="android.intent.category.DEFAULT"/>
@@ -27,9 +33,10 @@
             </intent-filter>
 
         </activity>
+
         <activity
-            android:name=".DelayedConfirmationActivity"
-            android:label="@string/title_activity_delayed_confirmation" >
+            android:name=".PositionActivity"
+            android:label="@string/title_activity_position" >
 
         </activity>
     </application>

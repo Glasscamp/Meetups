@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.support.wearable.view.CardFragment;
 import android.view.View;
+import android.widget.FrameLayout;
 
 public class MainActivity extends Activity {
     private static final int SPEECH_REQUEST_CODE = 0;
@@ -24,10 +25,18 @@ public class MainActivity extends Activity {
         fragmentTransaction.add(R.id.frame_layout, cardFragment);
         fragmentTransaction.commit();
 
-        findViewById(R.id.frame_layout).setOnClickListener(new View.OnClickListener() {
+        FrameLayout frame = (FrameLayout) findViewById(R.id.frame_layout);
+        frame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 displaySpeechRecognizer();
+            }
+        });
+        frame.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                startActivity(new Intent(MainActivity.this, PositionActivity.class));
+                return true;
             }
         });
 
@@ -48,9 +57,7 @@ public class MainActivity extends Activity {
         if(requestCode == SPEECH_REQUEST_CODE) {
             if(resultCode == RESULT_OK) {
                 Intent intent = new Intent(this, DelayedConfirmationActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("spokenText", data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS).get(0));
-                intent.putExtras(bundle);
+                intent.putExtra(Intent.EXTRA_TEXT, data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS).get(0));
                 startActivity(intent);
             }
         }
